@@ -26,7 +26,7 @@ client.on('guildMemberRemove', member => {
 });
 
 client.on('message', msg => {
-if (msg.content === '!intro') {
+if (msg.content === '!intro') { 
 msg.reply('Hallo!');
 }
 });
@@ -46,6 +46,14 @@ client.on('message', message => {
             .setDescription('Hello, this is a slick embed!');
         // Send the embed to the same channel as the message
         message.channel.send(embed);
+    }
+});
+
+client.on('message', message => {
+    // If the message is "what is my avatar"
+    if (message.content === 'what is my avatar') {
+        // Send the user's avatar URL
+        message.reply(message.author.displayAvatarURL());
     }
 });
 

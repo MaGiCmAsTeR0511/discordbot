@@ -5,21 +5,22 @@ const utf8 = require('utf8');
 const stdin = process.stdin;
 const cf = require('./config.json');
 const prefix = cf.prefix;
-var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb://localhost:27017/";
+const MongoClient = require('mongodb').MongoClient;
+const url = "mongodb://localhost:27017/";
+
 
 client.on('ready', () => {
 console.log(`${client.user.tag} is ready!`);
 });
-
 client.login(auth.token);
 
-
+// Entscheidung was getan werden soll wenn eine Nachricht eingegeben wird 
 client.on("message", function (message) {
     if (message.author.bot) return;
     if (!message.content.startsWith(prefix)) return;
 
     const commandBody = message.content.slice(prefix.length);
+    //ausplitten der Argumente
     const args = commandBody.split(' ');
     const command = args.shift().toLowerCase();
 
@@ -45,9 +46,9 @@ client.on("message", function (message) {
                 if (err) throw err;
                 var dbo = db.db("discord");
                 var myobj = { _user:user.toString() , datum: args[0]};
-                dbo.collection("discord").insertOne(myobj, function (err, res) {
+                dbo.collection("anmeldungen").insertOne(myobj, function (err, res) {
                     if (err) throw err;
-                    console.log("1 document inserted");
+                    console.log("1 Dokument eingetragen");
                     db.close();
                 });
             });
@@ -66,6 +67,7 @@ client.on('guildMemberAdd', member => {
     channel.send(`Willkommen in der Drachenhoehle, ${member}`);
 });
 
+// Nachricht an alles wenn jemand den Server verlässt
 client.on('guildMemberRemove', member => {
     const channel = member.guild.channels.cache.find(ch => ch.name === 'byebye');
     if (!channel) return;
@@ -73,6 +75,8 @@ client.on('guildMemberRemove', member => {
     channel.send(`Der Drache wurde entfernt aus der Hoehle, ${member}`);
 });
 
+
+//zum beenden des prozesses mit strg+c
 stdin.on('keypress', function (letter, key) {
   if (key
   && key.ctrl

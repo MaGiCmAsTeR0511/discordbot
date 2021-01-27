@@ -19,6 +19,7 @@ client.on("message", function (message) {
     if (message.author.bot) return;
     if (!message.content.startsWith(prefix)) return;
 
+
     const commandBody = message.content.slice(prefix.length);
     //ausplitten der Argumente
     const args = commandBody.split(' ');
@@ -48,7 +49,7 @@ client.on("message", function (message) {
                 var myobj = { _user:user.toString() , datum: args[0]};
                 dbo.collection("anmeldungen").insertOne(myobj, function (err, res) {
                     if (err) throw err;
-                    console.log("1 Dokument eingetragen");
+                    console.log("1 Dokument eingetragen!");
                     db.close();
                 });
             });

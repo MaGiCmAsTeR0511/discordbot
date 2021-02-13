@@ -57,6 +57,23 @@ client.on("message", function (message) {
         } else {
             message.reply('Du hast kein Datum für die ANmeldung eingegeben');
         }
+    } else if (command === "befehle") {
+       
+            var user = message.member;
+            MongoClient.connect(url, function (err, db) {
+                if (err) throw err;
+                var dbo = db.db("discord");
+                dbo.collection("befehle").find({}).toArray(function (err, result) {
+                    if (err) throw err;
+                    var befehle = [];
+                    result.forEach(element => {
+                        befehle.push(element.befehlcode);
+                    })
+                    message.channel.send("Das sind die nutzbaren befehle: " + befehle.join(", "));
+                    db.close();
+                });
+            });
+            //message.reply(`Deine Anmeldung wurde bestätigt 🤩`);
     }
 });
 

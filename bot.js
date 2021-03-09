@@ -39,6 +39,10 @@ client.on("message", function (message) {
     }
     else if (command === "codcw") {
         message.reply('Hier ist mein battleTag für COD-COLDWAR:');
+    }// direkte Nachricht an den User
+    else if (command === "testme") {
+        message.author.send('test');
+        //message.reply('Hier ist mein battleTag für COD-COLDWAR:');
     }
     else if (command === "anmeldung") {
         if (args !== '') {
